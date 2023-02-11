@@ -1,3 +1,23 @@
+# Smart Voting Application
+
+Master thesis project. During the development process, Netlify is used to host this project.
+
+## Problem Statement
+
+## Objectives
+
+## Outcomes
+
+## System Design
+
+## System Architecture
+
+## Backend and Frontend tools
+
+## Project structure
+
+## Project Deployment
+
 # Next + Netlify Starter
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/46648482-644c-4c80-bafb-872057e51b6b/deploy-status)](https://app.netlify.com/sites/next-dev-starter/deploys)
@@ -74,7 +94,7 @@ For our testing, we use [Cypress](https://www.cypress.io/) for end-to-end testin
 -    enable = true
 -
 -  [plugins.inputs]
--    enable = false 
+-    enable = false
 ```
 
 If you’d like to remove the `netlify-plugin-cypress` build plugin entirely, you’d need to delete the entire block above instead. And then make sure sure to remove the package from the dependencies using:
