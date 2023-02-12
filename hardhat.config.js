@@ -1,13 +1,15 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("dotenv");
+require("dotenv").config();
 require("@nomiclabs/hardhat-etherscan");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.6",
-  optimizer: {
-    enabled: true,
-    runs: 200,
+  settings: {
+    optimizer: {
+      enabled: true,
+      runs: 200,
+    },
   },
   defaultNetwork: "hardhat",
   networks: {
@@ -15,38 +17,38 @@ module.exports = {
     hardhat: {
       chainId: 1337,
     },
-    // Goerli testnet
-    goerli: {
-      url: `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
-      accounts: [process.env.MAIN_ACCOUNT],
-      chainId: 5,
-    },
-    // Mumbai Testnet
-    mumbai: {
-      url: `https://polygon-mumbai.infura.io/v3/${process.env.INFURA_API_KEY}`,
-      accounts: [process.env.MAIN_ACCOUNT],
-      chainId: 80001,
-    },
-    // Polygon mainnet
-    polygon: {
-      url: `https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
-      accounts: [process.env.MAIN_ACCOUNT],
-      chainId: 137,
-    },
-    // Ethereum mainnet
-    mainnet: {
-      url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
-      accounts: [process.env.MAIN_ACCOUNT],
-      chainId: 1,
-    },
+    // // Goerli testnet
+    // goerli: {
+    //   url: `https://goerli.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    //   accounts: [process.env.MAIN_ACCOUNT],
+    //   chainId: 5,
+    // },
+    // // Mumbai Testnet
+    // mumbai: {
+    //   url: `https://polygon-mumbai.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    //   accounts: [process.env.MAIN_ACCOUNT],
+    //   chainId: 80001,
+    // },
+    // // Polygon mainnet
+    // polygon: {
+    //   url: `https://polygon-mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    //   accounts: [process.env.MAIN_ACCOUNT],
+    //   chainId: 137,
+    // },
+    // // Ethereum mainnet
+    // mainnet: {
+    //   url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+    //   accounts: [process.env.MAIN_ACCOUNT],
+    //   chainId: 1,
+    // },
   },
   gasReporter: {
     enabled: true,
     currency: "USD",
     noColors: true,
+    outputFile: "gasReportFile2.txt",
     coinmarketcap: process.env.COINMARKETKAP_API_KEY,
-    // token: "matic",
-    outputFile: "gasReports.txt",
+    token: "matic",
   },
   paths: {
     sources: "./contracts",
