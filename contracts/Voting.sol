@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.6;
 
-// import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./openzeppelin/Counters.sol";
+import "./openzeppelin/Ownable.sol";
 
 // Errors
 error VoteTypeAlreadyExist();
@@ -500,16 +499,6 @@ contract Voting is Ownable {
     function getCandidates() public view returns (Candidate[] memory) {
         return s_candidate;
     }
-
-    // Get all valides candidates for a specifique vote.
-    // function getValidsCandidateVote(uint256 _voteId) public view returns(Candidate[] memory) {
-    //     uint256 size = validsCandidateForVote[_voteId].length;
-    //     Candidate[] memory candidateVote = new Candidate[](size);
-
-    //     for(uint i = 0; i < size; i++) {
-    //         candidateVote[i] = candidateInfo[validsCandidateForVote[_voteId]];
-    //     }
-    // }
 
     // Cast vote for voter
     function castVote(

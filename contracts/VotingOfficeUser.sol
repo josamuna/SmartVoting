@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "./openzeppelin/Counters.sol";
 
 // Errors
 error VotingOfficeAlreadyExist();

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./openzeppelin/Counters.sol";
+import "./openzeppelin/Ownable.sol";
 
 pragma solidity 0.8.6;
 
