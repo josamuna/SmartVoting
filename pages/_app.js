@@ -27,7 +27,8 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-800 hover:text-orange-700"
       >
-        <Link href="castVote" className="flex items-center">
+        {/* <Link href="/castVote" className="flex items-center"> */}
+        <Link href="/castVote" className="flex items-center">
           Cast Vote
         </Link>
       </Typography>
@@ -37,7 +38,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="voteType" className="flex items-center">
+        <Link href="/voteType" className="flex items-center">
           Vote type
         </Link>
       </Typography>
@@ -47,7 +48,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="votingOffice" className="flex items-center">
+        <Link href="/votingOffice" className="flex items-center">
           Voting Office
         </Link>
       </Typography>
@@ -57,7 +58,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="vote" className="flex items-center">
+        <Link href="/vote" className="flex items-center">
           Vote
         </Link>
       </Typography>
@@ -67,7 +68,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="candidates" className="flex items-center">
+        <Link href="/candidates" className="flex items-center">
           Candidates
         </Link>
       </Typography>
@@ -77,7 +78,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="witnesses" className="flex items-center">
+        <Link href="/witnesses" className="flex items-center">
           Witnesses
         </Link>
       </Typography>
@@ -87,7 +88,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="voters" className="flex items-center">
+        <Link href="/voters" className="flex items-center">
           Voters
         </Link>
       </Typography>
@@ -125,7 +126,7 @@ function SmartVoting({ Component, pageProps }) {
             >
               <Link href="/login">
                 <span className="font-normal text-purple-800 hover:text-orange-800">
-                  Login
+                  Logout
                 </span>
               </Link>
             </Button>

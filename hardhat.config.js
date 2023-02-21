@@ -15,7 +15,7 @@ module.exports = {
   networks: {
     // Hardhat localhost testnet
     hardhat: {
-      chainId: 1337,
+      chainId: 1337, //31337 - 1337
     },
     // Goerli testnet
     goerli: {

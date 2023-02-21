@@ -21,48 +21,39 @@ function voteType() {
     designation: "",
     description: "",
   });
-  const [dataVoteType, setDataVoteType] = useState([]); // State trigger returned saved data
+  const [dataVoteType, setDataVoteType] = useState([]);
 
-  // Using useEffect to trigger re-rendering after values have been saved.
+  // // Using useEffect to trigger re-rendering after values have been saved.
   useEffect(() => {
     initialFocusRef.current.focus(); // Set the focus.
-    loadVoteType(); // Load data each time we re-rendering
+    loadVoteType();
   }, []);
 
   const columns = [
-    {
-      field: "id",
-      headerName: "ID",
-      width: 90,
-      headerClassName: "header-style",
-    },
+    { field: "id", headerName: "ID", width: 90 },
     {
       field: "designation",
       headerName: "Designation",
       description: "Vote Type designation",
-      width: 300,
+      width: 200,
       editable: false,
-      headerClassName: "header-style",
     },
     {
       field: "description",
       headerName: "Description",
       description: "Vote Type description",
-      width: 350,
+      width: 250,
       editable: false,
-      headerClassName: "header-style",
     },
     {
       field: "user",
       headerName: "User Address",
       description: "User's address who save the record in the Blockchain",
-      width: 500,
+      width: 620,
       editable: false,
-      headerClassName: "header-style",
     },
   ];
 
-  // Load vote Type records
   async function loadVoteType() {
     try {
       const provider = new ethers.providers.JsonRpcProvider();
@@ -76,59 +67,21 @@ function voteType() {
       const items = await Promise.all(
         data.map(async (i) => {
           let item = {
-            id: i.id.toNumber(), // Convert BigInt to JavaScript Number
+            id: i.id.toNumber(),
             designation: i.designation,
             description: i.description,
             user: i.user,
           };
+
           return item;
         })
       );
-      setDataVoteType(items); // Set State data
+      setDataVoteType(items);
+      console.log("Items =>", items);
+      //   console.log("Data2=>", dataVoteType);
+      return items;
     } catch (error) {
       console.log(`loadVoteType => ${error}`);
-    }
-  }
-
-  // Savae new vote Type record
-  async function saveVoteType() {
-    const { designation, description } = formInput;
-    try {
-      if (!designation || !description) {
-        throw new Error("Please provide valid designation and description.");
-      }
-      const web3Modal = new Web3Modal();
-      const connection = await web3Modal.connect(); // Connect to Metamask wallet
-      const provider = new ethers.providers.Web3Provider(connection); // Specify provider
-      const signer = provider.getSigner(); // Get the Signers
-
-      let votingContrat = new ethers.Contract(
-        votingaddress,
-        Voting.abi,
-        signer
-      ); // Get Contract references
-      const transaction = await votingContrat.setVoteType(
-        designation,
-        description
-      ); // Call contract function
-      const tx = await transaction.wait();
-
-      // Use event to retreive values inserted
-      // const event = tx.events[0];
-      // console.log("event emit: ", event);
-      // let value = event.args[2];
-      // console.log("event values: ", event.args[2]);
-
-      await transaction.wait();
-      NotificationManager.success(
-        "New record successfully saved.",
-        "Save",
-        5000
-      );
-      loadVoteType();
-    } catch (error) {
-      NotificationManager.warning("New record can not be saved.", "Save", 8000);
-      console.log(`saveVoteType => ${error}`);
     }
   }
 
@@ -160,7 +113,7 @@ function voteType() {
             }}
           />
           <button
-            onClick={saveVoteType}
+            onClick={console.log("ok")}
             className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
           >
             Save
@@ -171,15 +124,19 @@ function voteType() {
         <NotificationContainer />
       </article>
       <article className="flex justify-center mx-4">
-        <Box
-          sx={{
-            height: 250,
-            width: "100%",
-            "& .header-style": {
-              fontSize: "large",
-            },
-          }}
-        >
+        <h1>SHOW VALUES</h1>
+        <br />
+        {/* {dataVoteType.map((val, index) => {
+          return (
+            <div key={index}>
+              <h3>Id: {val.id}</h3>
+              <h3>Designation: {val.designation}</h3>
+              <h3>Description: {val.description}</h3>
+              <h3>Address: {val.user}</h3>
+            </div>
+          );
+        })} */}
+        <Box sx={{ height: 250, width: "100%" }}>
           <DataGrid
             rows={dataVoteType}
             columns={columns}

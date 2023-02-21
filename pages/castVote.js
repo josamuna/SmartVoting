@@ -1,7 +1,15 @@
 import React from "react";
+import Footer from "@components/Footer";
 
-function vote() {
-  return <div>Cast your vote</div>;
+function castVote() {
+  return (
+    <section>
+      Cast your vote
+      <article>
+        <Footer />
+      </article>
+    </section>
+  );
 }
 
-export default vote;
+export default castVote;
