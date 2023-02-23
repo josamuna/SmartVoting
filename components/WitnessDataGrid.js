@@ -6,26 +6,27 @@ const columns = [
   {
     field: "id",
     headerName: "ID",
-    description: "Vote Type ID",
-    width: 150,
+    description: "Witness ID",
+    width: 100,
     headerClassName: "header-style",
   },
   {
-    field: "designation",
-    headerName: "Designation",
-    description: "Vote Type designation",
-    width: 250,
-    editable: false,
-    headerClassName: "header-style",
-  },
-  {
-    field: "description",
-    headerName: "Description",
-    description: "Vote Type description",
+    field: "organization",
+    headerName: "Organization",
+    description: "The organization that witness represent",
     width: 350,
     editable: false,
     headerClassName: "header-style",
   },
+  {
+    field: "fullname",
+    headerName: "Fullname",
+    description: "Witness fullname",
+    width: 250,
+    editable: false,
+    headerClassName: "header-style",
+  },
+
   {
     field: "user",
     headerName: "User Address",
@@ -36,7 +37,7 @@ const columns = [
   },
 ];
 
-function VoteTypeDataGrid({ dataLoad }) {
+function WitnessesDataGrid({ dataLoad }) {
   return (
     <Box
       sx={{
@@ -50,8 +51,8 @@ function VoteTypeDataGrid({ dataLoad }) {
       <DataGrid
         rows={dataLoad}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={25}
+        rowsPerPageOptions={[25]}
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
         sx={{
@@ -67,4 +68,4 @@ function VoteTypeDataGrid({ dataLoad }) {
   );
 }
 
-export default VoteTypeDataGrid;
+export default WitnessesDataGrid;

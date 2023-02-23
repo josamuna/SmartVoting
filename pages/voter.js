@@ -9,70 +9,64 @@ import {
 import "react-notifications/lib/notifications.css"; // To handle beautifull React Notification.
 import Footer from "@components/Footer";
 
-import VotingOfficeDataGrid from "@components/VotingOfficeDataGrid";
+import VoterDataGrid from "@components/VoterDataGrid";
 
-import { votingofficeuseraddress } from "../config"; // Contract Address.
-import VotingOffice from "./abis/VotingOfficeUser.json"; // ABI.
+import { votingaddress } from "config"; // Contract Address.
+import Voting from "./abis/Voting.json"; // ABI.
 
-function votingOffice() {
+function voter() {
   const initialFocusRef = useRef(null);
+  const [isIdExist, setIsIdExist] = useState(false);
   const [formInput, updateFormInput] = useState({
     id: 0,
-    designation: "",
+    address: "",
   });
   const [dataLoad, setDataLoad] = useState([]); // State trigger returned saved data.
 
   // Using useEffect to trigger re-rendering after values have been saved.
   useEffect(() => {
     initialFocusRef.current.focus(); // Set the focus.
-    loadVotingOffice(); // Load data each time we re-rendering.
+    loadVoter(); // Load data each time we re-rendering.
   }, []);
 
-  // Load voting office records
-  async function loadVotingOffice() {
+  // Load Voter records
+  async function loadVoter() {
     try {
       const provider = new ethers.providers.JsonRpcProvider();
-      const contract = new ethers.Contract(
-        votingofficeuseraddress,
-        VotingOffice.abi,
-        provider
-      );
-      const data = await contract.getVotingOffices();
+      const contract = new ethers.Contract(votingaddress, Voting.abi, provider);
+      const data = await contract.getVoters();
 
       const items = await Promise.all(
         data.map(async (i) => {
           let item = {
             id: i.id.toNumber(), // Convert BigInt to JavaScript Number.
-            designation: i.designation,
-            user: i.user,
+            voter: i.voter,
           };
           return item;
         })
       );
       setDataLoad(items); // Set State data.
     } catch (error) {
-      console.error(`loadVotingOffice => ${error}`);
+      console.error(`loadVoters => ${error}`);
     }
   }
 
-  // Save new Voting Office record.
-  async function saveVotingOffice() {
-    const { designation, description } = formInput;
+  // Savae new Voter record.
+  async function saveVoter() {
+    const { address } = formInput;
     try {
-      if (!designation) {
-        throw new Error("Please provide valid designation.");
+      if (!address) {
+        throw new Error(
+          "Please provide valid address (In format of 0xf3c3...)."
+        );
       }
       const web3Modal = new Web3Modal();
       const connection = await web3Modal.connect(); // Connect to Metamask wallet.
       const provider = new ethers.providers.Web3Provider(connection); // Specify provider.
       const signer = provider.getSigner(); // Get the Signers.
 
-      const contract = new ethers.Contract(
-        votingofficeuseraddress,
-        VotingOffice.abi,
-        signer
-      ); // Get Contract references.
-      const transaction = await contract.setVotingOffice(designation); // Call contract function.
+      const contract = new ethers.Contract(votingaddress, Voting.abi, signer); // Get Contract references.
+      const transaction = await contract.setVoter(address); // Call contract function.
 
       await transaction.wait();
       NotificationManager.success(
@@ -80,10 +74,10 @@ function votingOffice() {
         "Save",
         5000
       );
-      loadVotingOffice();
+      loadVoter();
     } catch (error) {
       NotificationManager.warning("New record can not be saved.", "Save", 8000);
-      console.error(`saveVotingOffice => ${error}`);
+      console.error(`saveVoters => ${error}`);
     }
   }
 
@@ -92,7 +86,7 @@ function votingOffice() {
       <article className="flex justify-center pb-4">
         <div className="w-1/2 flex flex-col justify-center">
           <input
-            placeholder="Voting Office ID"
+            placeholder="Voter Unique ID"
             className="mt-2 border border-orange-100 rounded p-3"
             disabled
             onChange={(e) => {
@@ -100,26 +94,32 @@ function votingOffice() {
             }}
           />
           <input
-            placeholder="Designation"
+            placeholder="Address (Like: 0xe7f1725e7734ce288f8367e1bb143e90bb3f0512)"
             className="mt-2 border border-orange-200 rounded p-3"
             onChange={(e) => {
-              updateFormInput({ ...formInput, designation: e.target.value });
+              updateFormInput({ ...formInput, address: e.target.value });
             }}
             ref={initialFocusRef}
           />
           <button
-            onClick={saveVotingOffice}
+            onClick={saveVoter}
             className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
           >
-            Save
+            {(() => {
+              if (isIdExist) {
+                return "Update";
+              } else {
+                return "Save";
+              }
+            })()}
           </button>
         </div>
       </article>
       <article>
         <NotificationContainer />
       </article>
-      <article className="flex justify-center mx-36">
-        <VotingOfficeDataGrid dataLoad={dataLoad} />
+      <article className="flex justify-center mx-64">
+        <VoterDataGrid dataLoad={dataLoad} />
       </article>
       <article>
         <Footer />
@@ -128,4 +128,4 @@ function votingOffice() {
   );
 }
 
-export default votingOffice;
+export default voter;

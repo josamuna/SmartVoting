@@ -6,37 +6,54 @@ const columns = [
   {
     field: "id",
     headerName: "ID",
-    description: "Vote Type ID",
+    description: "Ballot Box ID",
     width: 150,
     headerClassName: "header-style",
   },
   {
-    field: "designation",
-    headerName: "Designation",
-    description: "Vote Type designation",
-    width: 250,
+    field: "voteId",
+    headerName: "Vote ID",
+    description: "Vote Type ID",
+    width: 190,
+    headerClassName: "header-style",
+  },
+  {
+    field: "candidateId",
+    headerName: "Candidate ID",
+    description: "Candidate ID",
+    width: 190,
     editable: false,
     headerClassName: "header-style",
   },
   {
-    field: "description",
-    headerName: "Description",
-    description: "Vote Type description",
-    width: 350,
+    field: "votingOfficeId",
+    headerName: "Voting Office ID",
+    description: "The voting Officed ID where the voter cast his vote",
+    width: 180,
+    editable: false,
+    headerClassName: "header-style",
+  },
+
+  {
+    field: "voterVoteStatus",
+    headerName: "Status",
+    description:
+      "The voter vote status (0 = Not voted, 1 = voted and 2 = blank)",
+    width: 120,
     editable: false,
     headerClassName: "header-style",
   },
   {
-    field: "user",
-    headerName: "User Address",
-    description: "User's address who save the record in the Blockchain",
+    field: "voterAddress",
+    headerName: "Voter Address",
+    description: "Voter Address",
     width: 500,
     editable: false,
     headerClassName: "header-style",
   },
 ];
 
-function VoteTypeDataGrid({ dataLoad }) {
+function BallotBoxDataGrid({ dataLoad }) {
   return (
     <Box
       sx={{
@@ -50,8 +67,8 @@ function VoteTypeDataGrid({ dataLoad }) {
       <DataGrid
         rows={dataLoad}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={25}
+        rowsPerPageOptions={[25]}
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
         sx={{
@@ -67,4 +84,4 @@ function VoteTypeDataGrid({ dataLoad }) {
   );
 }
 
-export default VoteTypeDataGrid;
+export default BallotBoxDataGrid;

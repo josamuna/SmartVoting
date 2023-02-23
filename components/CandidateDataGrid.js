@@ -6,23 +6,22 @@ const columns = [
   {
     field: "id",
     headerName: "ID",
-    description: "Vote Type ID",
-    width: 150,
+    description: "Candidate ID",
+    width: 90,
     headerClassName: "header-style",
   },
   {
-    field: "designation",
-    headerName: "Designation",
-    description: "Vote Type designation",
+    field: "orderNumber",
+    headerName: "Order Number",
+    description: "Candidate order number during voting process",
+    width: 180,
+    headerClassName: "header-style",
+  },
+  {
+    field: "fullname",
+    headerName: "Fullname",
+    description: "Candidate fullname",
     width: 250,
-    editable: false,
-    headerClassName: "header-style",
-  },
-  {
-    field: "description",
-    headerName: "Description",
-    description: "Vote Type description",
-    width: 350,
     editable: false,
     headerClassName: "header-style",
   },
@@ -34,9 +33,17 @@ const columns = [
     editable: false,
     headerClassName: "header-style",
   },
+  {
+    field: "image",
+    headerName: "User picture",
+    description: "Candidate's picture",
+    width: 200,
+    editable: false,
+    headerClassName: "header-style",
+  },
 ];
 
-function VoteTypeDataGrid({ dataLoad }) {
+function CandidateDataGrid({ dataLoad }) {
   return (
     <Box
       sx={{
@@ -50,8 +57,8 @@ function VoteTypeDataGrid({ dataLoad }) {
       <DataGrid
         rows={dataLoad}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={25}
+        rowsPerPageOptions={[25]}
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
         sx={{
@@ -67,4 +74,4 @@ function VoteTypeDataGrid({ dataLoad }) {
   );
 }
 
-export default VoteTypeDataGrid;
+export default CandidateDataGrid;

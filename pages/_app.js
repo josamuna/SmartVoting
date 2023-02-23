@@ -27,8 +27,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-800 hover:text-orange-700"
       >
-        {/* <Link href="/castVote" className="flex items-center"> */}
-        <Link href="/castVote" className="flex items-center">
+        <Link href="/ballotBox" className="flex items-center">
           Cast Vote
         </Link>
       </Typography>
@@ -68,7 +67,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="/candidates" className="flex items-center">
+        <Link href="/candidate" className="flex items-center">
           Candidates
         </Link>
       </Typography>
@@ -78,7 +77,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="/witnesses" className="flex items-center">
+        <Link href="/witness" className="flex items-center">
           Witnesses
         </Link>
       </Typography>
@@ -88,7 +87,7 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="/voters" className="flex items-center">
+        <Link href="/voter" className="flex items-center">
           Voters
         </Link>
       </Typography>
@@ -98,8 +97,8 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
-        <Link href="/votingResults" className="flex items-center">
-          Voting Results
+        <Link href="/registerCandidate" className="flex items-center">
+          Register Candidate
         </Link>
       </Typography>
     </ul>
@@ -114,7 +113,7 @@ function SmartVoting({ Component, pageProps }) {
               href="/"
               className="mr-4 cursor-pointer py-1.5 font-semibold text-lg text-blue-800 hover:text-purple-700"
             >
-              <Link href="/">
+              <Link href="/voteResults">
                 <span>Smart Voting Application</span>
               </Link>
             </Typography>

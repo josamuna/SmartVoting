@@ -6,22 +6,14 @@ const columns = [
   {
     field: "id",
     headerName: "ID",
-    description: "Vote Type ID",
+    description: "Voting Office ID",
     width: 150,
     headerClassName: "header-style",
   },
   {
     field: "designation",
     headerName: "Designation",
-    description: "Vote Type designation",
-    width: 250,
-    editable: false,
-    headerClassName: "header-style",
-  },
-  {
-    field: "description",
-    headerName: "Description",
-    description: "Vote Type description",
+    description: "Voting Office designation",
     width: 350,
     editable: false,
     headerClassName: "header-style",
@@ -36,11 +28,11 @@ const columns = [
   },
 ];
 
-function VoteTypeDataGrid({ dataLoad }) {
+function VotingOfficeDataGrid({ dataLoad }) {
   return (
     <Box
       sx={{
-        height: 250,
+        height: 310,
         width: "100%",
         "& .header-style": {
           fontSize: "large",
@@ -67,4 +59,4 @@ function VoteTypeDataGrid({ dataLoad }) {
   );
 }
 
-export default VoteTypeDataGrid;
+export default VotingOfficeDataGrid;

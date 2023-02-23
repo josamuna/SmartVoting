@@ -6,13 +6,13 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
-import "react-notifications/lib/notifications.css"; // To handle beautifull React Notification
-import Box from "@mui/material/Box";
-import { DataGrid } from "@mui/x-data-grid";
+import "react-notifications/lib/notifications.css"; // To handle beautifull React Notification.
 import Footer from "@components/Footer";
 
-import { votingaddress } from "../config"; // Contract Address
-import Voting from "./abis/Voting.json"; // ABI
+import VoteTypeDataGrid from "@components/VoteTypeDataGrid";
+
+import { votingaddress } from "../config"; // Contract Address.
+import Voting from "./abis/Voting.json"; // ABI.
 
 function voteType() {
   const initialFocusRef = useRef(null);
@@ -21,62 +21,25 @@ function voteType() {
     designation: "",
     description: "",
   });
-  const [dataVoteType, setDataVoteType] = useState([]); // State trigger returned saved data
+  const [dataLoad, setDataLoad] = useState([]); // State trigger returned saved data.
 
   // Using useEffect to trigger re-rendering after values have been saved.
   useEffect(() => {
     initialFocusRef.current.focus(); // Set the focus.
-    loadVoteType(); // Load data each time we re-rendering
+    loadVoteType(); // Load data each time we re-rendering.
   }, []);
-
-  const columns = [
-    {
-      field: "id",
-      headerName: "ID",
-      width: 90,
-      headerClassName: "header-style",
-    },
-    {
-      field: "designation",
-      headerName: "Designation",
-      description: "Vote Type designation",
-      width: 300,
-      editable: false,
-      headerClassName: "header-style",
-    },
-    {
-      field: "description",
-      headerName: "Description",
-      description: "Vote Type description",
-      width: 350,
-      editable: false,
-      headerClassName: "header-style",
-    },
-    {
-      field: "user",
-      headerName: "User Address",
-      description: "User's address who save the record in the Blockchain",
-      width: 500,
-      editable: false,
-      headerClassName: "header-style",
-    },
-  ];
 
   // Load vote Type records
   async function loadVoteType() {
     try {
       const provider = new ethers.providers.JsonRpcProvider();
-      const votingContract = new ethers.Contract(
-        votingaddress,
-        Voting.abi,
-        provider
-      );
-      const data = await votingContract.getVoteTypes();
+      const contract = new ethers.Contract(votingaddress, Voting.abi, provider);
+      const data = await contract.getVoteTypes();
 
       const items = await Promise.all(
         data.map(async (i) => {
           let item = {
-            id: i.id.toNumber(), // Convert BigInt to JavaScript Number
+            id: i.id.toNumber(), // Convert BigInt to JavaScript Number.
             designation: i.designation,
             description: i.description,
             user: i.user,
@@ -84,13 +47,13 @@ function voteType() {
           return item;
         })
       );
-      setDataVoteType(items); // Set State data
+      setDataLoad(items); // Set State data.
     } catch (error) {
-      console.log(`loadVoteType => ${error}`);
+      console.error(`loadVoteType => ${error}`);
     }
   }
 
-  // Savae new vote Type record
+  // Savae new vote Type record.
   async function saveVoteType() {
     const { designation, description } = formInput;
     try {
@@ -98,20 +61,13 @@ function voteType() {
         throw new Error("Please provide valid designation and description.");
       }
       const web3Modal = new Web3Modal();
-      const connection = await web3Modal.connect(); // Connect to Metamask wallet
-      const provider = new ethers.providers.Web3Provider(connection); // Specify provider
-      const signer = provider.getSigner(); // Get the Signers
+      const connection = await web3Modal.connect(); // Connect to Metamask wallet.
+      const provider = new ethers.providers.Web3Provider(connection); // Specify provider.
+      const signer = provider.getSigner(); // Get the Signers.
 
-      let votingContrat = new ethers.Contract(
-        votingaddress,
-        Voting.abi,
-        signer
-      ); // Get Contract references
-      const transaction = await votingContrat.setVoteType(
-        designation,
-        description
-      ); // Call contract function
-      const tx = await transaction.wait();
+      const contract = new ethers.Contract(votingaddress, Voting.abi, signer); // Get Contract references.
+      const transaction = await contract.setVoteType(designation, description); // Call contract function.
+      // const tx = await transaction.wait();
 
       // Use event to retreive values inserted
       // const event = tx.events[0];
@@ -128,7 +84,7 @@ function voteType() {
       loadVoteType();
     } catch (error) {
       NotificationManager.warning("New record can not be saved.", "Save", 8000);
-      console.log(`saveVoteType => ${error}`);
+      console.error(`saveVoteType => ${error}`);
     }
   }
 
@@ -138,7 +94,7 @@ function voteType() {
         <div className="w-1/2 flex flex-col justify-center">
           <input
             placeholder="Vote Type ID"
-            className="mt-2 border-orange-100 rounded p-3"
+            className="mt-2 border border-orange-100 rounded p-3"
             disabled
             onChange={(e) => {
               updateFormInput({ ...formInput, id: e.target.value });
@@ -146,7 +102,7 @@ function voteType() {
           />
           <input
             placeholder="Designation"
-            className="mt-2 border-orange-600 rounded p-3"
+            className="mt-2 border border-orange-200 rounded p-3"
             onChange={(e) => {
               updateFormInput({ ...formInput, designation: e.target.value });
             }}
@@ -154,7 +110,7 @@ function voteType() {
           />
           <input
             placeholder="Description"
-            className="mt-2 border-orange-600 rounded p-3"
+            className="mt-2 border border-orange-200 rounded p-3"
             onChange={(e) => {
               updateFormInput({ ...formInput, description: e.target.value });
             }}
@@ -170,33 +126,8 @@ function voteType() {
       <article>
         <NotificationContainer />
       </article>
-      <article className="flex justify-center mx-4">
-        <Box
-          sx={{
-            height: 250,
-            width: "100%",
-            "& .header-style": {
-              fontSize: "large",
-            },
-          }}
-        >
-          <DataGrid
-            rows={dataVoteType}
-            columns={columns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            disableSelectionOnClick
-            experimentalFeatures={{ newEditingApi: true }}
-            sx={{
-              boxShadow: 2,
-              border: 2,
-              borderColor: "primary.light",
-              "& .MuiDataGrid-cell:hover": {
-                color: "primary.main",
-              },
-            }}
-          />
-        </Box>
+      <article className="flex justify-center mx-16">
+        <VoteTypeDataGrid dataLoad={dataLoad} />
       </article>
       <article>
         <Footer />

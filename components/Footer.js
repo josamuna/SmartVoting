@@ -2,7 +2,10 @@
 function Footer() {
   return (
     <>
-      <footer className="mt-4 bg-gradient-to-t from-purple-300 to to-orange-100 text-white">
+      <footer
+        className="mt-4 mb-0 bg-gradient-to-t from-purple-300 to to-orange-100 text-white"
+        style={{ position: "relative", left: 0, bottom: 0, right: 0 }}
+      >
         <div className="flex justify-center px-6 pt-2">
           <a
             href="https://www.facebook.com/josamuna"

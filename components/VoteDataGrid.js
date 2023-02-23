@@ -6,23 +6,40 @@ const columns = [
   {
     field: "id",
     headerName: "ID",
-    description: "Vote Type ID",
-    width: 150,
+    description: "Vote ID",
+    width: 120,
     headerClassName: "header-style",
   },
   {
-    field: "designation",
-    headerName: "Designation",
-    description: "Vote Type designation",
-    width: 250,
+    field: "voteTypeId",
+    headerName: "Vote Type ID",
+    description: "Vote Type ID",
+    width: 170,
+    headerClassName: "header-style",
+  },
+  {
+    field: "timeDuration",
+    headerName: "Time duration (Hours)",
+    description: "Time duration for the vote",
+    width: 230,
     editable: false,
     headerClassName: "header-style",
   },
   {
-    field: "description",
-    headerName: "Description",
-    description: "Vote Type description",
-    width: 350,
+    field: "initialVotingTimestamp",
+    headerName: "Initial Timestamp",
+    description:
+      "The initial value of Unix timestamp when the vote was started",
+    width: 160,
+    editable: false,
+    headerClassName: "header-style",
+  },
+  {
+    field: "status",
+    headerName: "Vote Status",
+    description:
+      "The current vote status of a vote (0 => Not activated, 1 => Activated and 2 => Closed)",
+    width: 150,
     editable: false,
     headerClassName: "header-style",
   },
@@ -50,8 +67,8 @@ function VoteTypeDataGrid({ dataLoad }) {
       <DataGrid
         rows={dataLoad}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={25}
+        rowsPerPageOptions={[25]}
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
         sx={{

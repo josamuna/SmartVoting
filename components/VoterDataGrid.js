@@ -6,41 +6,26 @@ const columns = [
   {
     field: "id",
     headerName: "ID",
-    description: "Vote Type ID",
-    width: 150,
+    description: "Voter ID",
+    width: 300,
     headerClassName: "header-style",
   },
   {
-    field: "designation",
-    headerName: "Designation",
-    description: "Vote Type designation",
-    width: 250,
-    editable: false,
-    headerClassName: "header-style",
-  },
-  {
-    field: "description",
-    headerName: "Description",
-    description: "Vote Type description",
-    width: 350,
-    editable: false,
-    headerClassName: "header-style",
-  },
-  {
-    field: "user",
-    headerName: "User Address",
-    description: "User's address who save the record in the Blockchain",
+    field: "voter",
+    headerName: "Adress",
+    description: "Voter address",
     width: 500,
     editable: false,
     headerClassName: "header-style",
   },
 ];
 
-function VoteTypeDataGrid({ dataLoad }) {
+function VoterDataGrid({ dataLoad }) {
+  const [select, setSelection] = React.useState([]);
   return (
     <Box
       sx={{
-        height: 250,
+        height: 310,
         width: "100%",
         "& .header-style": {
           fontSize: "large",
@@ -50,10 +35,13 @@ function VoteTypeDataGrid({ dataLoad }) {
       <DataGrid
         rows={dataLoad}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={50}
+        rowsPerPageOptions={[50]}
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
+        onSelectionChange={(newSelection) => {
+          setSelection(newSelection.rows);
+        }}
         sx={{
           boxShadow: 2,
           border: 2,
@@ -67,4 +55,4 @@ function VoteTypeDataGrid({ dataLoad }) {
   );
 }
 
-export default VoteTypeDataGrid;
+export default VoterDataGrid;
