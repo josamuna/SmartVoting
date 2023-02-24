@@ -16,10 +16,12 @@ import Voting from "./abis/Voting.json"; // ABI.
 
 function voter() {
   const initialFocusRef = useRef(null);
-  const [isIdExist, setIsIdExist] = useState(false);
+  const [voterRows, setVoterRows] = useState(0);
   const [formInput, updateFormInput] = useState({
     id: 0,
+    idVoter: 0,
     address: "",
+    oldAddress: "",
   });
   const [dataLoad, setDataLoad] = useState([]); // State trigger returned saved data.
 
@@ -40,18 +42,54 @@ function voter() {
         data.map(async (i) => {
           let item = {
             id: i.id.toNumber(), // Convert BigInt to JavaScript Number.
+            idVoter: i.id.toNumber(),
             voter: i.voter,
           };
           return item;
         })
       );
+      setVoterRows(items.length); // Update state
       setDataLoad(items); // Set State data.
     } catch (error) {
       console.error(`loadVoters => ${error}`);
     }
   }
 
-  // Savae new Voter record.
+  async function updateVoterAddress() {
+    try {
+      const { oldAddress, address } = formInput;
+      if (!oldAddress || !address) {
+        throw new Error(
+          "Please provide valids old and new addresses (In format of 0xf3c3...)."
+        );
+      }
+
+      const web3Modal = new Web3Modal();
+      const connection = await web3Modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+
+      const contract = new ethers.Contract(votingaddress, Voting.abi, signer);
+      const transaction = await contract.updateVoter(oldAddress, address);
+
+      await transaction.await();
+      NotificationManager.success(
+        "Voter's Address successfully updated.",
+        "Update Voter's Address",
+        5000
+      );
+      loadVoter();
+    } catch (error) {
+      NotificationManager.warning(
+        "Update voter's address has failed.",
+        "Update Voter's Address",
+        8000
+      );
+      console.error(`updateVoterAddress => ${error}`);
+    }
+  }
+
+  // Save new Voter record.
   async function saveVoter() {
     const { address } = formInput;
     try {
@@ -81,6 +119,69 @@ function voter() {
     }
   }
 
+  if (voterRows > 0) {
+    return (
+      <section className="flex flex-col justify-center">
+        <article className="flex justify-center pb-4">
+          <div className="w-1/2 flex flex-col justify-center">
+            <input
+              placeholder="Voter Unique ID"
+              className="mt-2 border border-orange-100 rounded p-3"
+              disabled
+              onChange={(e) => {
+                updateFormInput({ ...formInput, id: e.target.value });
+              }}
+            />
+            <input
+              placeholder="Specify the Voter ID (ONLY WHEN YOU WANT TO UPDATE VOTE'S ADDRESS. Max 3 times.)"
+              type="number"
+              className="mt-2 border border-orange-100 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, idVoter: e.target.value });
+              }}
+            />
+            <input
+              placeholder="Old Address (Like: 0xe7f1725e7734ce288f8367e1bb143e90bb3f0512)"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, oldAddress: e.target.value });
+              }}
+            />
+            <input
+              placeholder="New Address / Address (Like: 0x5fbdb2315678afecb367f032d93f642f64180aa3)"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, address: e.target.value });
+              }}
+              ref={initialFocusRef}
+            />
+            <button
+              onClick={saveVoter}
+              className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
+            >
+              Save
+            </button>
+            <button
+              onClick={updateVoterAddress}
+              className="font-bold mt-2 bg-gradient-to-r from-blue-400 to to-green-500 hover:from-yellow-500 hover:to-pink-500 text-white rounded p-4 shadow-lg"
+            >
+              Update Voter Address
+            </button>
+          </div>
+        </article>
+        <article>
+          <NotificationContainer />
+        </article>
+        <article className="flex justify-center mx-64">
+          <VoterDataGrid dataLoad={dataLoad} />
+        </article>
+        <article>
+          <Footer />
+        </article>
+      </section>
+    );
+  }
+
   return (
     <section className="flex flex-col justify-center">
       <article className="flex justify-center pb-4">
@@ -105,13 +206,7 @@ function voter() {
             onClick={saveVoter}
             className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
           >
-            {(() => {
-              if (isIdExist) {
-                return "Update";
-              } else {
-                return "Save";
-              }
-            })()}
+            Save
           </button>
         </div>
       </article>

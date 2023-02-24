@@ -495,6 +495,13 @@ contract Voting is Ownable {
         emit RegisterCandidateForVote(_voteId, _arrCandidateIds);
     }
 
+    // Return all candidate ID register for a selected vote
+    function getRegisterCandidateForVote(
+        uint256 voteId
+    ) public view returns (uint[] memory) {
+        return validsCandidateForVote[voteId];
+    }
+
     // Get All candidate inside a single array of struct.
     function getCandidates() public view returns (Candidate[] memory) {
         return s_candidate;

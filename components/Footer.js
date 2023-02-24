@@ -30,7 +30,7 @@ function Footer() {
           </a>
 
           <a
-            href="https://twitter.com/josamuna!"
+            href="https://twitter.com/josamuna"
             type="button"
             className="rounded-full border-2 bg-purple-400 leading-normal uppercase hover:bg-orange-800 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
           >
