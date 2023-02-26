@@ -2,10 +2,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
+import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css"; // To handle beautifull React Notification.
 import Footer from "@components/Footer";
 
@@ -13,10 +10,8 @@ import BallotBoxDataGrid from "@components/BallotBoxDataGrid";
 
 import { votingaddress } from "../config"; // Contract Address.
 import Voting from "./abis/Voting.json"; // ABI.
-import { useRouter } from "next/router";
 
 function ballotBox() {
-  const router = useRouter();
   const initialFocusRef = useRef(null);
   const [options, setOptions] = useState([]);
   const [formInput, updateFormInput] = useState({
@@ -129,13 +124,10 @@ function ballotBox() {
         "Save",
         5000
       );
-      loadVote();
-
-      // Redirect to vote Results
-      // router.push("voteResults");
+      loadBallotBox();
     } catch (error) {
       NotificationManager.warning(
-        "New record can not be saved. Make sure that you have selected all field.",
+        "New record can not be saved. Please review your selection. Double vote would not be allowed.",
         "Save",
         8000
       );
@@ -145,99 +137,109 @@ function ballotBox() {
 
   return (
     <section className="flex flex-col justify-center">
-      <article className="flex justify-center pb-4">
-        <div className="w-1/2 flex flex-col justify-center">
-          <input
-            placeholder="BallotBox ID"
-            className="mt-2 border border-orange-100 rounded p-3"
-            disabled
-            onChange={(e) => {
-              updateFormInput({ ...formInput, id: e.target.value });
-            }}
-          />
-          <input
-            placeholder="Candidate ID (eg. 10, 230, 50, etc.)"
-            type="number"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, candidateId: e.target.value });
-            }}
-            ref={initialFocusRef}
-          />
-          <input
-            placeholder="Voter ID (Your personnal Unique ID)"
-            type="number"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, voterId: e.target.value });
-            }}
-          />
-          <input
-            placeholder="Voting Office ID (eg.1 for voting from Home or from Internet, 1120, etc.)"
-            type="number"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, votingOfficeId: e.target.value });
-            }}
-          />
-          <select
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, voteTypeId: e.target.value });
-            }}
-          >
-            {/* Default Choice */}
-            <option>Choose Vote Type ID</option>
-            {options.map((option) => {
-              return (
-                <option key={option.key} value={option.key}>
-                  {option.key}
-                </option>
-              );
-            })}
-          </select>
-          <input
-            type="number"
-            placeholder="Vote ID"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({
-                ...formInput,
-                voteId: e.target.value,
-              });
-            }}
-          />
-          <select
-            name="status"
-            id="status"
-            className="mt-2 border border-orange-100 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({
-                ...formInput,
-                voterVoteStatus: e.target.value,
-              });
-            }}
-          >
-            <option>
-              The voter vote status (0 = Not voted, 1 = voted and 2 = blank)
-            </option>
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-          </select>
-          <button
-            onClick={saveBallotBox}
-            className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
-          >
-            Save
-          </button>
+      <p className="flex justify-center mt-2 text-xl text-orange-700">
+        Cast new vote by voter
+      </p>
+      <article className="flex flex-row">
+        <article className="grow ml-8 mt-2 mr-4">
+          <div className="flex flex-col">
+            <input
+              placeholder="BallotBox ID"
+              className="mt-2 border border-orange-100 rounded p-3"
+              disabled
+              onChange={(e) => {
+                updateFormInput({ ...formInput, id: e.target.value });
+              }}
+            />
+            <input
+              placeholder="Candidate ID (eg. 10, 230, 50, etc.)"
+              type="number"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, candidateId: e.target.value });
+              }}
+              ref={initialFocusRef}
+            />
+            <input
+              placeholder="Voter ID (Your personnal Unique ID)"
+              type="number"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, voterId: e.target.value });
+              }}
+            />
+            <input
+              placeholder="Voting Office ID (eg.1 for voting from Home or from Internet, 1120, etc.)"
+              type="number"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({
+                  ...formInput,
+                  votingOfficeId: e.target.value,
+                });
+              }}
+            />
+            <select
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, voteTypeId: e.target.value });
+              }}
+            >
+              {/* Default Choice */}
+              <option>Choose Vote Type ID</option>
+              {options.map((option) => {
+                return (
+                  <option key={option.key} value={option.key}>
+                    {option.key}
+                  </option>
+                );
+              })}
+            </select>
+            <input
+              type="number"
+              placeholder="Vote ID"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({
+                  ...formInput,
+                  voteId: e.target.value,
+                });
+              }}
+            />
+            <select
+              name="status"
+              id="status"
+              className="mt-2 border border-orange-100 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({
+                  ...formInput,
+                  voterVoteStatus: e.target.value,
+                });
+              }}
+            >
+              <option>
+                The voter vote status (0 = Not voted, 1 = voted and 2 = blank)
+              </option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+            </select>
+            <button
+              onClick={saveBallotBox}
+              className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
+            >
+              Save
+            </button>
+          </div>
+        </article>
+        <article className="grow mt-4 ml-4 mr-8 border border-orange-200 rounded p-3">
+          <div>Candidate Picture</div>
+        </article>
+      </article>
+      <article className="flex flex-col">
+        <div className="flex justify-center mx-8 mt-4">
+          <BallotBoxDataGrid dataLoad={dataLoad} />
         </div>
-      </article>
-      <article>
-        <NotificationContainer />
-      </article>
-      <article className="flex justify-center mx-8">
-        <BallotBoxDataGrid dataLoad={dataLoad} />
       </article>
       <article>
         <Footer />

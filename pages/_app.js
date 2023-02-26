@@ -27,8 +27,8 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-800 hover:text-orange-700"
       >
-        <Link href="/ballotBox" className="flex items-center">
-          Cast Vote
+        <Link href="/" className="flex items-center">
+          Home
         </Link>
       </Typography>
       <Typography
@@ -101,6 +101,16 @@ function SmartVoting({ Component, pageProps }) {
           Register Candidate
         </Link>
       </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal text-purple-900 hover:text-orange-700"
+      >
+        <Link href="/voteResults" className="flex items-center">
+          Results
+        </Link>
+      </Typography>
     </ul>
   );
 
@@ -109,13 +119,8 @@ function SmartVoting({ Component, pageProps }) {
       <section className="bg-gradient-to-b from-purple-300 to to-orange-100">
         <Navbar className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4">
           <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
-            <Typography
-              href="/"
-              className="mr-4 cursor-pointer py-1.5 font-semibold text-lg text-blue-800 hover:text-purple-700"
-            >
-              <Link href="/voteResults">
-                <span>Smart Voting Application</span>
-              </Link>
+            <Typography className="mr-4 cursor-pointer py-1.5 font-semibold text-lg text-blue-800 hover:text-purple-700">
+              <span>Smart Voting Application</span>
             </Typography>
             <div className="hidden lg:block">{navList}</div>
             <Button

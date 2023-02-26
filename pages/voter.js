@@ -19,7 +19,6 @@ function voter() {
   const [voterRows, setVoterRows] = useState(0);
   const [formInput, updateFormInput] = useState({
     id: 0,
-    idVoter: 0,
     address: "",
     oldAddress: "",
   });
@@ -42,7 +41,6 @@ function voter() {
         data.map(async (i) => {
           let item = {
             id: i.id.toNumber(), // Convert BigInt to JavaScript Number.
-            idVoter: i.id.toNumber(),
             voter: i.voter,
           };
           return item;
@@ -72,7 +70,7 @@ function voter() {
       const contract = new ethers.Contract(votingaddress, Voting.abi, signer);
       const transaction = await contract.updateVoter(oldAddress, address);
 
-      await transaction.await();
+      await transaction.wait();
       NotificationManager.success(
         "Voter's Address successfully updated.",
         "Update Voter's Address",
@@ -121,7 +119,74 @@ function voter() {
 
   if (voterRows > 0) {
     return (
-      <section className="flex flex-col justify-center">
+      <section>
+        <article className="flex flex-col">
+          <p className="flex justify-center mt-2 mb-2 text-xl text-orange-700">
+            Register a voter
+          </p>
+        </article>
+        <article className="flex flex-col justify-center">
+          <article className="flex justify-center pb-4">
+            <div className="w-1/2 flex flex-col justify-center">
+              <input
+                placeholder="Voter Unique ID"
+                className="mt-2 border border-orange-100 rounded p-3"
+                disabled
+                onChange={(e) => {
+                  updateFormInput({ ...formInput, id: e.target.value });
+                }}
+              />
+              <input
+                placeholder="Old Address (Like: 0xe7f1725e7734ce288f8367e1bb143e90bb3f0512)"
+                className="mt-2 border border-orange-200 rounded p-3"
+                onChange={(e) => {
+                  updateFormInput({ ...formInput, oldAddress: e.target.value });
+                }}
+              />
+              <input
+                placeholder="New Address / Address (Like: 0x5fbdb2315678afecb367f032d93f642f64180aa3)"
+                className="mt-2 border border-orange-200 rounded p-3"
+                onChange={(e) => {
+                  updateFormInput({ ...formInput, address: e.target.value });
+                }}
+                ref={initialFocusRef}
+              />
+              <button
+                onClick={saveVoter}
+                className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
+              >
+                Save
+              </button>
+              <button
+                onClick={updateVoterAddress}
+                className="font-bold mt-2 bg-gradient-to-r from-blue-400 to to-green-500 hover:from-yellow-500 hover:to-pink-500 text-white rounded p-4 shadow-lg"
+              >
+                Update Voter Address
+              </button>
+            </div>
+          </article>
+          <article>
+            <NotificationContainer />
+          </article>
+          <article className="flex justify-center mx-64">
+            <VoterDataGrid dataLoad={dataLoad} />
+          </article>
+          <article>
+            <Footer />
+          </article>
+        </article>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <article className="flex flex-col">
+        <p className="flex justify-center mt-2 mb-2 text-xl text-orange-700">
+          Register a voter
+        </p>
+      </article>
+      <article className="flex flex-col justify-center">
         <article className="flex justify-center pb-4">
           <div className="w-1/2 flex flex-col justify-center">
             <input
@@ -133,22 +198,7 @@ function voter() {
               }}
             />
             <input
-              placeholder="Specify the Voter ID (ONLY WHEN YOU WANT TO UPDATE VOTE'S ADDRESS. Max 3 times.)"
-              type="number"
-              className="mt-2 border border-orange-100 rounded p-3"
-              onChange={(e) => {
-                updateFormInput({ ...formInput, idVoter: e.target.value });
-              }}
-            />
-            <input
-              placeholder="Old Address (Like: 0xe7f1725e7734ce288f8367e1bb143e90bb3f0512)"
-              className="mt-2 border border-orange-200 rounded p-3"
-              onChange={(e) => {
-                updateFormInput({ ...formInput, oldAddress: e.target.value });
-              }}
-            />
-            <input
-              placeholder="New Address / Address (Like: 0x5fbdb2315678afecb367f032d93f642f64180aa3)"
+              placeholder="Address (Like: 0xe7f1725e7734ce288f8367e1bb143e90bb3f0512)"
               className="mt-2 border border-orange-200 rounded p-3"
               onChange={(e) => {
                 updateFormInput({ ...formInput, address: e.target.value });
@@ -161,12 +211,6 @@ function voter() {
             >
               Save
             </button>
-            <button
-              onClick={updateVoterAddress}
-              className="font-bold mt-2 bg-gradient-to-r from-blue-400 to to-green-500 hover:from-yellow-500 hover:to-pink-500 text-white rounded p-4 shadow-lg"
-            >
-              Update Voter Address
-            </button>
           </div>
         </article>
         <article>
@@ -178,46 +222,6 @@ function voter() {
         <article>
           <Footer />
         </article>
-      </section>
-    );
-  }
-
-  return (
-    <section className="flex flex-col justify-center">
-      <article className="flex justify-center pb-4">
-        <div className="w-1/2 flex flex-col justify-center">
-          <input
-            placeholder="Voter Unique ID"
-            className="mt-2 border border-orange-100 rounded p-3"
-            disabled
-            onChange={(e) => {
-              updateFormInput({ ...formInput, id: e.target.value });
-            }}
-          />
-          <input
-            placeholder="Address (Like: 0xe7f1725e7734ce288f8367e1bb143e90bb3f0512)"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, address: e.target.value });
-            }}
-            ref={initialFocusRef}
-          />
-          <button
-            onClick={saveVoter}
-            className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
-          >
-            Save
-          </button>
-        </div>
-      </article>
-      <article>
-        <NotificationContainer />
-      </article>
-      <article className="flex justify-center mx-64">
-        <VoterDataGrid dataLoad={dataLoad} />
-      </article>
-      <article>
-        <Footer />
       </article>
     </section>
   );

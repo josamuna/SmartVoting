@@ -14,7 +14,7 @@ const columns = [
     field: "candidateIds",
     headerName: "All Candidates IDs",
     description: "All candidates IDs register for a specific vote",
-    width: 600,
+    width: 500,
     height: 100,
     editable: false,
     headerClassName: "header-style",

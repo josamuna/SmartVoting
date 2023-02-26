@@ -5,11 +5,6 @@ export const votingofficeuseraddress =
   "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
 export const witnessuseradress = "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707";
 
-// export const votingaddress = "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0";
-// export const votingofficeuseraddress =
-//   "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82";
-// export const witnessuseradress = "0x9A676e781A523b5d0C0e43731313A708CB607508";
-
 // Goerli
 // export const votingaddress ="0x0E022631B59c05b1eef03C673c35B2EEA1b6307c"
 // export const votingofficeuseraddress="0xEa270453F89A4B64c43ca8aD0084B6F927e011fb"

@@ -165,7 +165,131 @@ function vote() {
   // Make available to activate vote when at least one row exist.
   if (voteRows > 0) {
     return (
-      <section className="flex flex-col justify-center">
+      <section>
+        <article className="flex flex-col">
+          <p className="flex justify-center mt-2 mb-2 text-xl text-orange-700">
+            Register a vote
+          </p>
+        </article>
+        <article className="flex flex-col justify-center">
+          <article className="flex justify-center pb-4">
+            <div className="w-1/2 flex flex-col justify-center">
+              <input
+                placeholder="Vote ID"
+                className="mt-2 border border-orange-100 rounded p-3"
+                disabled
+                onChange={(e) => {
+                  updateFormInput({ ...formInput, id: e.target.value });
+                }}
+              />
+              <input
+                placeholder="Specify the Vote ID to be activated (ONLY WHEN YOU WANT TO ACTIVATE VOTE)"
+                type="number"
+                className="mt-2 border border-orange-100 rounded p-3"
+                onChange={(e) => {
+                  updateFormInput({ ...formInput, idVote: e.target.value });
+                }}
+              />
+              <select
+                className="mt-2 border border-orange-100 rounded p-3"
+                onChange={(e) => {
+                  updateFormInput({
+                    ...formInput,
+                    voteTypeId: e.target.value,
+                  });
+                }}
+              >
+                {/* Default Choice */}
+                <option>Choose Vote Type ID</option>
+                {options.map((option) => {
+                  return <option key={option.key}>{option.key}</option>;
+                })}
+              </select>
+              <input
+                placeholder="Time duration"
+                type="number"
+                className="mt-2 border border-orange-200 rounded p-3"
+                onChange={(e) => {
+                  updateFormInput({
+                    ...formInput,
+                    timeDuration: e.target.value,
+                  });
+                }}
+                ref={initialFocusRef}
+              />
+              <input
+                type="number"
+                placeholder="Initial unix timestamp of vote"
+                className="mt-2 border border-orange-100 rounded p-3"
+                disabled
+                onChange={(e) => {
+                  updateFormInput({
+                    ...formInput,
+                    initialVotingTimestamp: e.target.value,
+                  });
+                }}
+              />
+              <input
+                type="number"
+                placeholder="Vote status"
+                className="mt-2 border border-orange-100 rounded p-3"
+                disabled
+                onChange={(e) => {
+                  updateFormInput({
+                    ...formInput,
+                    status: e.target.value,
+                  });
+                }}
+              />
+              <label className="mt-2 border border-orange-100 rounded p-3">
+                <input
+                  type="checkbox"
+                  onChange={(e) => {
+                    updateFormInput({
+                      ...formInput,
+                      active: e.target.checked,
+                    });
+                  }}
+                />
+                &nbsp; Activate Vote
+              </label>
+
+              <button
+                onClick={saveVote}
+                className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
+              >
+                Save
+              </button>
+              <button
+                onClick={activateVote}
+                className="font-bold mt-4 bg-gradient-to-r from-blue-400 to to-green-500 hover:from-yellow-500 hover:to-pink-500 text-white rounded p-4 shadow-lg"
+              >
+                Activate vote
+              </button>
+            </div>
+          </article>
+          <article>
+            <NotificationContainer />
+          </article>
+          <article className="flex justify-center mx-4">
+            <VoteDataGrid dataLoad={dataLoad} />
+          </article>
+          <article>
+            <Footer />
+          </article>
+        </article>
+      </section>
+    );
+  }
+
+  return (
+    <section>
+      <article className="flex flex-col">
+        <p className="flex justify-center mt-2 mb-2 text-xl text-orange-700">
+          Register a vote
+        </p>
+      </article>
+      <article className="flex flex-col justify-center">
         <article className="flex justify-center pb-4">
           <div className="w-1/2 flex flex-col justify-center">
             <input
@@ -174,14 +298,6 @@ function vote() {
               disabled
               onChange={(e) => {
                 updateFormInput({ ...formInput, id: e.target.value });
-              }}
-            />
-            <input
-              placeholder="Specify the Vote ID to be activated (ONLY WHEN YOU WANT TO ACTIVATE VOTE)"
-              type="number"
-              className="mt-2 border border-orange-100 rounded p-3"
-              onChange={(e) => {
-                updateFormInput({ ...formInput, idVote: e.target.value });
               }}
             />
             <select
@@ -232,31 +348,11 @@ function vote() {
                 });
               }}
             />
-
-            <label className="mt-2 border border-orange-100 rounded p-3">
-              <input
-                type="checkbox"
-                onChange={(e) => {
-                  updateFormInput({
-                    ...formInput,
-                    active: e.target.checked,
-                  });
-                }}
-              />
-              &nbsp; Activate Vote
-            </label>
-
             <button
               onClick={saveVote}
               className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
             >
               Save
-            </button>
-            <button
-              onClick={activateVote}
-              className="font-bold mt-4 bg-gradient-to-r from-blue-400 to to-green-500 hover:from-yellow-500 hover:to-pink-500 text-white rounded p-4 shadow-lg"
-            >
-              Activate vote
             </button>
           </div>
         </article>
@@ -269,86 +365,6 @@ function vote() {
         <article>
           <Footer />
         </article>
-      </section>
-    );
-  }
-
-  return (
-    <section className="flex flex-col justify-center">
-      <article className="flex justify-center pb-4">
-        <div className="w-1/2 flex flex-col justify-center">
-          <input
-            placeholder="Vote ID"
-            className="mt-2 border border-orange-100 rounded p-3"
-            disabled
-            onChange={(e) => {
-              updateFormInput({ ...formInput, id: e.target.value });
-            }}
-          />
-          <select
-            className="mt-2 border border-orange-100 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({
-                ...formInput,
-                voteTypeId: e.target.value,
-              });
-            }}
-          >
-            {/* Default Choice */}
-            <option>Choose Vote Type ID</option>
-            {options.map((option) => {
-              return <option key={option.key}>{option.key}</option>;
-            })}
-          </select>
-          <input
-            placeholder="Time duration"
-            type="number"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, timeDuration: e.target.value });
-            }}
-            ref={initialFocusRef}
-          />
-          <input
-            type="number"
-            placeholder="Initial unix timestamp of vote"
-            className="mt-2 border border-orange-100 rounded p-3"
-            disabled
-            onChange={(e) => {
-              updateFormInput({
-                ...formInput,
-                initialVotingTimestamp: e.target.value,
-              });
-            }}
-          />
-          <input
-            type="number"
-            placeholder="Vote status"
-            className="mt-2 border border-orange-100 rounded p-3"
-            disabled
-            onChange={(e) => {
-              updateFormInput({
-                ...formInput,
-                status: e.target.value,
-              });
-            }}
-          />
-          <button
-            onClick={saveVote}
-            className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
-          >
-            Save
-          </button>
-        </div>
-      </article>
-      <article>
-        <NotificationContainer />
-      </article>
-      <article className="flex justify-center mx-4">
-        <VoteDataGrid dataLoad={dataLoad} />
-      </article>
-      <article>
-        <Footer />
       </article>
     </section>
   );

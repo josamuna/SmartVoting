@@ -19,7 +19,7 @@ const columns = [
   },
   {
     field: "timeDuration",
-    headerName: "Time duration (Hours)",
+    headerName: "Time duration (Min.)",
     description: "Time duration for the vote",
     width: 230,
     editable: false,
@@ -30,7 +30,7 @@ const columns = [
     headerName: "Initial Timestamp",
     description:
       "The initial value of Unix timestamp when the vote was started",
-    width: 160,
+    width: 180,
     editable: false,
     headerClassName: "header-style",
   },
@@ -47,7 +47,7 @@ const columns = [
     field: "user",
     headerName: "User Address",
     description: "User's address who save the record in the Blockchain",
-    width: 500,
+    width: 400,
     editable: false,
     headerClassName: "header-style",
   },

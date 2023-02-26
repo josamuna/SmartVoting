@@ -63,7 +63,7 @@ function candidate() {
       });
       // add farmated selected file path to the infura path (From ou project inside infura).
       const url = `https://smartvoting.infura-ipfs.io/ipfs/${added.path}`;
-      console.log("CandidateOnlyPictureUri =>", url);
+      // console.log("CandidateOnlyPictureUri =>", url);
       setFileUrl(url);
     } catch (error) {
       console.error(`onChange-FileLoading => ${error}`);
@@ -80,7 +80,6 @@ function candidate() {
       const items = await Promise.all(
         data.map(async (i) => {
           const meta = await axios.get(i.pictureURI);
-          console.log("META => ", meta);
           let item = {
             id: i.id.toNumber(), // Convert BigInt to JavaScript Number.
             orderNumber: i.orderNumber.toNumber(), // Convert BigInt to JavaScript Number
@@ -92,7 +91,6 @@ function candidate() {
           return item;
         })
       );
-      console.log("CANDIDATE => ", items);
       setDataLoad(items); // Set State data.
     } catch (error) {
       console.error(`loadCandidate => ${error}`);
@@ -102,7 +100,6 @@ function candidate() {
   // Savae new candidate record.
   async function saveCandidate() {
     const { orderNumber, fullname } = formInput;
-
     try {
       if (!orderNumber || !fullname) {
         throw new Error(
@@ -133,10 +130,6 @@ function candidate() {
         url
       ); // Call contract function.
 
-      // Update pictureURI proferty to be used in the state
-      // updateFormInput({ ...formInput, pictureURI: url });
-      // console.log("formInput.pictureURI:", formInput.pictureURI);
-
       await transaction.wait();
       NotificationManager.success(
         "New record successfully saved.",
@@ -155,77 +148,81 @@ function candidate() {
   }
 
   return (
-    <section className="flex flex-col justify-center">
-      <div>
-        {dataLoad.map((img, i) => (
-          <div key={i}>
-            <img
-              src={img.image}
-              className="border border-orange-300 rounded-lg h-24 w-24 shadow m-4"
+    <section>
+      <article className="flex flex-col">
+        <p className="flex justify-center mt-2 text-xl text-orange-700">
+          Register Candidates
+        </p>
+      </article>
+      <article className="flex flex-row">
+        <article className="grow ml-8 mr-4 mt-2">
+          <div className="flex flex-col">
+            <input
+              placeholder="Candidate ID"
+              className="mt-2 border border-orange-100 rounded p-3"
+              disabled
+              onChange={(e) => {
+                updateFormInput({ ...formInput, id: e.target.value });
+              }}
             />
+            <input
+              placeholder="Order Number"
+              type="number"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({
+                  ...formInput,
+                  orderNumber: e.target.value,
+                });
+              }}
+              ref={initialFocusRef}
+            />
+            <input
+              placeholder="Fullname"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, fullname: e.target.value });
+              }}
+            />
+            <input
+              type="file"
+              name="asset"
+              placeholder="Candidate picture file"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={onChange}
+            />
+            {/* {fileUrl && (
+              <img
+                className="rounded mt-2"
+                // src={fileUrl}
+                alt="Candidate picture"
+                width={150}
+                height={150}
+              />
+            )} */}
+            <button
+              onClick={saveCandidate}
+              className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
+            >
+              Save
+            </button>
           </div>
-        ))}
-      </div>
-      <article className="flex justify-center pb-4">
-        <div className="w-1/2 flex flex-col justify-center">
-          <input
-            placeholder="Candidate ID"
-            className="mt-2 border border-orange-100 rounded p-3"
-            disabled
-            onChange={(e) => {
-              updateFormInput({ ...formInput, id: e.target.value });
-            }}
-          />
-          <input
-            placeholder="Order Number"
-            type="number"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({
-                ...formInput,
-                orderNumber: e.target.value,
-              });
-            }}
-            ref={initialFocusRef}
-          />
-          <input
-            placeholder="Fullname"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, fullname: e.target.value });
-            }}
-          />
-          <input
-            type="file"
-            name="asset"
-            placeholder="Candidate picture file"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={onChange}
-          />
-          {fileUrl && (
-            <img
-              className="rounded mt-2"
-              src={fileUrl}
-              alt="Candidate picture"
-              width={150}
-              height={150}
-            />
-          )}
-          <button
-            onClick={saveCandidate}
-            className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
-          >
-            Save
-          </button>
+        </article>
+        <div className="grow flex justify-center mr-8 ml-4 mt-4 p-0 border border-orange-200 rounded">
+          <div className="flex justify-center w-72 h-72 my-2">
+            {fileUrl && <img src={fileUrl} alt="Candidate Picture" />}
+          </div>
         </div>
       </article>
-      <article>
-        <NotificationContainer />
+      <article className="flex flex-col">
+        <article>
+          <NotificationContainer />
+        </article>
+        <article className="flex justify-center mx-8 mt-4">
+          <CandidateDataGrid dataLoad={dataLoad} />
+        </article>
       </article>
-      <article className="flex justify-center mx-4">
-        <CandidateDataGrid dataLoad={dataLoad} />
-      </article>
-      <article>
+      <article className="mt-4">
         <Footer />
       </article>
     </section>

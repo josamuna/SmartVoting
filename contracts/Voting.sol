@@ -407,7 +407,7 @@ contract Voting is Ownable {
     function computeVoteTimeDuration(
         uint256 _initialTimestamp
     ) private view returns (uint) {
-        // return (block.timestamp - _initialTimestamp) / (60 * 60); // H => (60) Min, (60 * 60) H, (60 * 60 * 24) Day
+        // return (block.timestamp - _initialTimestamp) / (60) Min // => (60) Min, (60 * 60) H, (60 * 60 * 24) Day
         return (block.timestamp - _initialTimestamp) / (60);
     }
 

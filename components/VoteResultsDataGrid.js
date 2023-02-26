@@ -4,10 +4,17 @@ import { DataGrid } from "@mui/x-data-grid";
 
 const columns = [
   {
+    field: "id",
+    headerName: "ID",
+    description: "Row ID",
+    width: 80,
+    headerClassName: "header-style",
+  },
+  {
     field: "voteId",
     headerName: "Vote ID",
     description: "Vote ID",
-    width: 110,
+    width: 100,
     headerClassName: "header-style",
   },
   {
@@ -22,7 +29,7 @@ const columns = [
     field: "candidateFullName",
     headerName: "Candidate fullname",
     description: "Candidate fullname",
-    width: 220,
+    width: 200,
     editable: false,
     headerClassName: "header-style",
   },
@@ -30,7 +37,7 @@ const columns = [
     field: "candidateNumber",
     headerName: "Candidate Number",
     description: "Candidate Order Number",
-    width: 190,
+    width: 170,
     editable: false,
     headerClassName: "header-style",
   },
@@ -38,7 +45,7 @@ const columns = [
     field: "votesCast",
     headerName: "Votes candidate",
     description: "Total number of votes received by the candidate",
-    width: 170,
+    width: 150,
     editable: false,
     headerClassName: "header-style",
   },
@@ -46,7 +53,7 @@ const columns = [
     field: "candidatePercentage",
     headerName: "% Vote Candidate",
     description: "Percentage of current vote received by candidate",
-    width: 200,
+    width: 180,
     editable: false,
     headerClassName: "header-style",
   },
@@ -54,11 +61,10 @@ const columns = [
     field: "votesBlank",
     headerName: "Blank votes",
     description: "Total number of blank votes",
-    width: 120,
+    width: 110,
     editable: false,
     headerClassName: "header-style",
   },
-
   {
     field: "blankPercentage",
     headerName: "% Blank Votes",
@@ -73,7 +79,7 @@ function VotingOfficeDataGrid({ dataLoad }) {
   return (
     <Box
       sx={{
-        height: 310,
+        height: 400,
         width: "100%",
         "& .header-style": {
           fontSize: "large",

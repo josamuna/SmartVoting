@@ -90,48 +90,55 @@ function witness() {
   }
 
   return (
-    <section className="flex flex-col justify-center">
-      <article className="flex justify-center pb-4">
-        <div className="w-1/2 flex flex-col justify-center">
-          <input
-            placeholder="Witness ID"
-            className="mt-2 border border-orange-100 rounded p-3"
-            disabled
-            onChange={(e) => {
-              updateFormInput({ ...formInput, id: e.target.value });
-            }}
-          />
-          <input
-            placeholder="Organization"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, organization: e.target.value });
-            }}
-            ref={initialFocusRef}
-          />
-          <input
-            placeholder="Fullname"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, fullname: e.target.value });
-            }}
-          />
-          <button
-            onClick={saveWitness}
-            className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
-          >
-            Save
-          </button>
-        </div>
+    <section>
+      <article className="flex flex-col">
+        <p className="flex justify-center mt-2 mb-2 text-xl text-orange-700">
+          Register witnesses for the voting process
+        </p>
       </article>
-      <article>
-        <NotificationContainer />
-      </article>
-      <article className="flex justify-center mx-24">
-        <WitnessDataGrid dataLoad={dataLoad} />
-      </article>
-      <article>
-        <Footer />
+      <article className="flex flex-col justify-center">
+        <article className="flex justify-center pb-4">
+          <div className="w-1/2 flex flex-col justify-center">
+            <input
+              placeholder="Witness ID"
+              className="mt-2 border border-orange-100 rounded p-3"
+              disabled
+              onChange={(e) => {
+                updateFormInput({ ...formInput, id: e.target.value });
+              }}
+            />
+            <input
+              placeholder="Organization"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, organization: e.target.value });
+              }}
+              ref={initialFocusRef}
+            />
+            <input
+              placeholder="Fullname"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, fullname: e.target.value });
+              }}
+            />
+            <button
+              onClick={saveWitness}
+              className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
+            >
+              Save
+            </button>
+          </div>
+        </article>
+        <article>
+          <NotificationContainer />
+        </article>
+        <article className="flex justify-center mx-24">
+          <WitnessDataGrid dataLoad={dataLoad} />
+        </article>
+        <article>
+          <Footer />
+        </article>
       </article>
     </section>
   );

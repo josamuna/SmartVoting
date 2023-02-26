@@ -88,41 +88,48 @@ function votingOffice() {
   }
 
   return (
-    <section className="flex flex-col justify-center">
-      <article className="flex justify-center pb-4">
-        <div className="w-1/2 flex flex-col justify-center">
-          <input
-            placeholder="Voting Office ID"
-            className="mt-2 border border-orange-100 rounded p-3"
-            disabled
-            onChange={(e) => {
-              updateFormInput({ ...formInput, id: e.target.value });
-            }}
-          />
-          <input
-            placeholder="Designation"
-            className="mt-2 border border-orange-200 rounded p-3"
-            onChange={(e) => {
-              updateFormInput({ ...formInput, designation: e.target.value });
-            }}
-            ref={initialFocusRef}
-          />
-          <button
-            onClick={saveVotingOffice}
-            className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
-          >
-            Save
-          </button>
-        </div>
+    <section>
+      <article className="flex flex-col">
+        <p className="flex justify-center mt-2 mb-2 text-xl text-orange-700">
+          Register Voting office for the voting process
+        </p>
       </article>
-      <article>
-        <NotificationContainer />
-      </article>
-      <article className="flex justify-center mx-36">
-        <VotingOfficeDataGrid dataLoad={dataLoad} />
-      </article>
-      <article>
-        <Footer />
+      <article className="flex flex-col justify-center">
+        <article className="flex justify-center pb-4">
+          <div className="w-1/2 flex flex-col justify-center">
+            <input
+              placeholder="Voting Office ID"
+              className="mt-2 border border-orange-100 rounded p-3"
+              disabled
+              onChange={(e) => {
+                updateFormInput({ ...formInput, id: e.target.value });
+              }}
+            />
+            <input
+              placeholder="Designation"
+              className="mt-2 border border-orange-200 rounded p-3"
+              onChange={(e) => {
+                updateFormInput({ ...formInput, designation: e.target.value });
+              }}
+              ref={initialFocusRef}
+            />
+            <button
+              onClick={saveVotingOffice}
+              className="font-bold mt-2 bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-4 shadow-lg"
+            >
+              Save
+            </button>
+          </div>
+        </article>
+        <article>
+          <NotificationContainer />
+        </article>
+        <article className="flex justify-center mx-36">
+          <VotingOfficeDataGrid dataLoad={dataLoad} />
+        </article>
+        <article>
+          <Footer />
+        </article>
       </article>
     </section>
   );
