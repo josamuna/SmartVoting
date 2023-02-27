@@ -11,7 +11,7 @@ module.exports = {
       runs: 200,
     },
   },
-  defaultNetwork: "hardhat",
+  defaultNetwork: "mumbai",
   networks: {
     // Hardhat localhost testnet
     hardhat: {
