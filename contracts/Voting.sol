@@ -3,6 +3,7 @@ pragma solidity 0.8.6;
 
 import "./openzeppelin/Counters.sol";
 import "./openzeppelin/Ownable.sol";
+import "./openzeppelin/Strings.sol";
 
 // Errors
 error VoteTypeAlreadyExist();
@@ -57,6 +58,8 @@ contract Voting is Ownable {
 
     // Counter to handle IDs
     using Counters for Counters.Counter;
+    // To support string conversion
+    using Strings for uint256;
 
     Counters.Counter private _voteTypeIds;
     Counters.Counter private _voteIds;
@@ -107,8 +110,8 @@ contract Voting is Ownable {
         string candidateFullName;
         uint256 votesCast;
         uint256 votesBlank;
-        uint candidatePercentage;
-        uint blankPercentage;
+        string candidatePercentage;
+        string blankPercentage;
     }
 
     // Serves as the ballot box during the entire voting process.
@@ -617,17 +620,57 @@ contract Voting is Ownable {
     function getCandidatePercentageVoteCast(
         uint256 _voteId,
         uint256 _candidateId
-    ) public view returns (uint) {
-        return ((totalCandidateVotesCast[_voteId][_candidateId] * 100) /
-            getTotalVotingVoteCast(_voteId));
+    ) public view returns (string memory) {
+        return
+            divide(
+                (totalCandidateVotesCast[_voteId][_candidateId] * 100),
+                getTotalVotingVoteCast(_voteId)
+            );
     }
 
     // Get blank vote percentage for a specifique vote (Vote ID)
     function getBlankPercentageVoteCast(
         uint256 _voteId
-    ) public view returns (uint) {
-        return ((totalVotingVoteCastBlank[_voteId] * 100) /
-            getTotalVotingVoteCast(_voteId));
+    ) public view returns (string memory) {
+        return
+            divide(
+                (totalVotingVoteCastBlank[_voteId] * 100),
+                getTotalVotingVoteCast(_voteId)
+            );
+    }
+
+    // Handle proper division with decimal part (2 Decimals)
+    function divide(
+        uint256 numerator,
+        uint256 denominator
+    ) public pure returns (string memory result) {
+        uint256 factor = 10 ** 2;
+        uint256 quotient = numerator / denominator;
+        bool rounding = 2 * ((numerator * factor) % denominator) >= denominator;
+        uint256 remainder = ((numerator * factor) / denominator) % factor;
+        if (rounding) {
+            remainder += 1;
+        }
+        result = string(
+            abi.encodePacked(
+                quotient.toString(),
+                ".",
+                numToFixedLengthStr(2, remainder)
+            )
+        );
+    }
+
+    function numToFixedLengthStr(
+        uint256 decimalPlaces,
+        uint256 num
+    ) internal pure returns (string memory result) {
+        bytes memory byteString;
+        for (uint256 i = 0; i < decimalPlaces; i++) {
+            uint256 remainder = num % 10;
+            byteString = abi.encodePacked(remainder.toString(), byteString);
+            num = num / 10;
+        }
+        result = string(byteString);
     }
 
     // Compute voting result to be shown to the user
@@ -643,11 +686,13 @@ contract Voting is Ownable {
 
             uint256 _votesCast = getCandidateVoteCast(_voteId, _candidateId);
             uint256 _voteBlank = getTotalBlankVotingVoteCast(_voteId);
-            uint _candidatePercentage = getCandidatePercentageVoteCast(
+            string memory _candidatePercentage = getCandidatePercentageVoteCast(
                 _voteId,
                 _candidateId
             );
-            uint _blankPercentage = getBlankPercentageVoteCast(_voteId);
+            string memory _blankPercentage = getBlankPercentageVoteCast(
+                _voteId
+            );
 
             s_voteResults[i] = (
                 VoteResults({

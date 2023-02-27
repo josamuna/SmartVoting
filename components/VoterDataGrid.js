@@ -29,6 +29,7 @@ function VoterDataGrid({ dataLoad }) {
         width: "100%",
         "& .header-style": {
           fontSize: "large",
+          color: "rgb(164,65,12)",
         },
       }}
     >

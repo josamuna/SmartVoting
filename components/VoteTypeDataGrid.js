@@ -14,7 +14,7 @@ const columns = [
     field: "designation",
     headerName: "Designation",
     description: "Vote Type designation",
-    width: 250,
+    width: 240,
     editable: false,
     headerClassName: "header-style",
   },
@@ -22,7 +22,7 @@ const columns = [
     field: "description",
     headerName: "Description",
     description: "Vote Type description",
-    width: 350,
+    width: 340,
     editable: false,
     headerClassName: "header-style",
   },
@@ -44,6 +44,7 @@ function VoteTypeDataGrid({ dataLoad }) {
         width: "100%",
         "& .header-style": {
           fontSize: "large",
+          color: "rgb(164,65,12)",
         },
       }}
     >

@@ -67,6 +67,16 @@ function SmartVoting({ Component, pageProps }) {
         color="blue-gray"
         className="p-1 font-normal text-purple-900 hover:text-orange-700"
       >
+        <Link href="/voter" className="flex items-center">
+          Voters
+        </Link>
+      </Typography>
+      <Typography
+        as="li"
+        variant="small"
+        color="blue-gray"
+        className="p-1 font-normal text-purple-900 hover:text-orange-700"
+      >
         <Link href="/candidate" className="flex items-center">
           Candidates
         </Link>
@@ -79,16 +89,6 @@ function SmartVoting({ Component, pageProps }) {
       >
         <Link href="/witness" className="flex items-center">
           Witnesses
-        </Link>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal text-purple-900 hover:text-orange-700"
-      >
-        <Link href="/voter" className="flex items-center">
-          Voters
         </Link>
       </Typography>
       <Typography
@@ -128,7 +128,7 @@ function SmartVoting({ Component, pageProps }) {
               size="sm"
               className="hidden lg:inline-block"
             >
-              <Link href="/login">
+              <Link href="/logout">
                 <span className="font-normal text-purple-800 hover:text-orange-800">
                   Logout
                 </span>
@@ -176,7 +176,7 @@ function SmartVoting({ Component, pageProps }) {
             <div className="container mx-auto">
               {navList}
               <Button variant="gradient" size="sm" fullWidth className="mb-2">
-                <span>Login</span>
+                <span>Logout</span>
               </Button>
             </div>
           </MobileNav>

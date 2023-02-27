@@ -298,8 +298,9 @@ describe("Manipulations of Ballot Box for voters vote", function () {
     );
     const candidateVotePercentage =
       await votingContract.getCandidatePercentageVoteCast(arr1[0], candidateId);
-    const blankVotePercentage =
-      await votingContract.getTotalBlankVotingVoteCast(arr1[0]);
+    const blankVotePercentage = await votingContract.getBlankPercentageVoteCast(
+      arr1[0]
+    );
 
     expect(arr2[0][0]).to.equal(arr1[0]); // voteId
     expect(arr2[0][1]).to.equal(candidateId); // candidateId

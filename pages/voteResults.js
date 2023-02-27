@@ -17,25 +17,8 @@ function voteResults() {
   const initialFocusRef = useRef(null);
   const [formInput, updateFormInput] = useState({
     voteId: 0,
-    // candidateId: 0,
-    // candidateNumber: 0,
-    // candidateFullName: "",
-    // votesCast: 0,
-    // votesBlank: 0,
-    // candidatePercentage: 0,
-    // blankPercentage: 0,
   });
-  const [winner, setWinner] = useState({
-    id: 0,
-    voteId: 0,
-    candidateId: 0,
-    candidateNumber: 0,
-    candidateFullName: "",
-    votesCast: 0,
-    votesBlank: 0,
-    candidatePercentage: 0,
-    blankPercentage: 0,
-  });
+
   const [dataLoad, setDataLoad] = useState([]); // State trigger returned saved data.
 
   // Using useEffect to trigger re-rendering after values have been saved.
@@ -65,19 +48,15 @@ function voteResults() {
             candidateFullName: i.candidateFullName,
             votesCast: i.votesCast.toNumber(),
             votesBlank: i.votesBlank.toNumber(),
-            candidatePercentage: i.candidatePercentage.toNumber().toFixed(2),
-            blankPercentage: i.blankPercentage.toNumber().toFixed(2),
+            candidatePercentage: i.candidatePercentage + "%",
+            blankPercentage: i.blankPercentage + "%",
           };
           return item;
         })
       );
-      // Set the winner according to current vote
-      const max = items.map((x) => Math.max(x));
-      console.log("x = ", max);
-      const tb = items.filter((h) => Math.max(h.votesCast));
-      setWinner(items.filter((results) => Math.max(results.votesCast)));
-      console.log(winner);
+
       setDataLoad(items); // Set State data.
+
       if (items.length === 0) {
         NotificationManager.info(
           "There is no results to show for this vote ID.",
@@ -103,7 +82,7 @@ function voteResults() {
         </p>
       </article>
       <article className="flex flex-row">
-        <div className="grow mr-2 ml-8 mt-4">
+        <div className="grow mr-4 ml-48 mt-4">
           <input
             placeholder="Vote ID"
             type="number"
@@ -114,38 +93,7 @@ function voteResults() {
             ref={initialFocusRef}
           />
         </div>
-        <div className="grow mx-2 mt-4">
-          <input
-            placeholder="Winner's Candidate fullname"
-            className="w-full border border-orange-100 rounded p-3"
-            disabled
-          />
-        </div>
-        <div className="grow mx-2 mt-4">
-          <input
-            placeholder="Number of Blank votes"
-            type="number"
-            className="w-full border border-orange-100 rounded p-3"
-            disabled
-          />
-        </div>
-        <div className="grow mx-2 mt-4">
-          <input
-            placeholder="Percentage of Blank votes"
-            type="number"
-            className="w-full border border-orange-100 rounded p-3"
-            disabled
-          />
-        </div>
-        <div className="grow mx-2 mt-4">
-          <input
-            placeholder="Winner's Percentage of vote"
-            type="number"
-            className="w-full border border-orange-100 rounded p-3"
-            disabled
-          />
-        </div>
-        <div className="grow ml-2 mt-4 mr-8">
+        <div className="grow ml-4 mr-48 mt-4">
           <button
             onClick={() => loadVoteResults(formInput.voteId)}
             className="w-full font-bold bg-gradient-to-r from-green-400 to to-blue-500 hover:from-pink-500 hover:to-yellow-500 text-white rounded p-3 shadow-lg"
