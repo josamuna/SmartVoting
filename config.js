@@ -1,16 +1,18 @@
 // Contract address
 // Hardhat
-export const votingaddress = "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9";
+export const votingaddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 export const votingofficeuseraddress =
-  "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9";
-export const witnessuseradress = "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707";
+  "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+export const witnessuseradress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
 
 // Goerli
-// export const votingaddress ="0x0E022631B59c05b1eef03C673c35B2EEA1b6307c"
-// export const votingofficeuseraddress="0xEa270453F89A4B64c43ca8aD0084B6F927e011fb"
-// export const witnessuseradress=" 0xA783F908559930CeE6c78C0520c056cAB7B3cac4";
+// export const votingaddress = "0x5a4A504721C60Bd14dc5D2832604E1C13F354fcb";
+// export const votingofficeuseraddress =
+//   "0xB5A2907d2E7373379095BF530eEBecA49Bb32008";
+// export const witnessuseradress = " 0x5e98819691f62ca92a7d4C02AbC3b1c2f02FD309";
 
 // Mumbai
-// export const votingaddress ="0xCac3e703e222803D13fa3bE7C41DD13e9AA03742"
-// export const votingofficeuseraddress="0x50256A88d1bf6829b8d8Ca245b48B3a408BC77AA"
-// export const witnessuseradress="0xd6124c88160407cBf0B8f19f2136F36aC8b0B5F9";
+// export const votingaddress = "0xe215350F4063674d729B4645ad828Be6De53Bd61";
+// export const votingofficeuseraddress =
+//   "0x50256A88d1bf6829b8d8Ca245b48B3a408BC77AA";
+// export const witnessuseradress = "0xd6124c88160407cBf0B8f19f2136F36aC8b0B5F9";

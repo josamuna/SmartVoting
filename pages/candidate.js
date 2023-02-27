@@ -209,22 +209,22 @@ function candidate() {
           </div>
         </article>
         <div className="grow flex justify-center mr-8 ml-4 mt-4 p-0 border border-orange-200 rounded">
-          <div className="flex justify-center w-72 h-72 my-2">
+          <div className="flex justify-center w-72 h-72">
             {fileUrl && <img src={fileUrl} alt="Candidate Picture" />}
           </div>
         </div>
       </article>
-      <article className="flex flex-col">
+      <article className="flex flex-col mb-4">
         <article>
           <NotificationContainer />
         </article>
-        <article className="flex justify-center mx-8 mt-4">
+        <article className="flex justify-center mx-8 my-4">
           <CandidateDataGrid dataLoad={dataLoad} />
         </article>
       </article>
-      <article className="mt-4">
+      {/* <article className="mt-4">
         <Footer />
-      </article>
+      </article> */}
     </section>
   );
 }

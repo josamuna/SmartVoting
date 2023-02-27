@@ -33,6 +33,7 @@ function voteType() {
   async function loadVoteType() {
     try {
       const provider = new ethers.providers.JsonRpcProvider();
+      console.log("provider = ", provider);
       const contract = new ethers.Contract(votingaddress, Voting.abi, provider);
       const data = await contract.getVoteTypes();
 
@@ -132,12 +133,12 @@ function voteType() {
         <article>
           <NotificationContainer />
         </article>
-        <article className="flex justify-center mx-16">
+        <article className="flex justify-center mx-16 my-4">
           <VoteTypeDataGrid dataLoad={dataLoad} />
         </article>
-        <article>
+        {/* <article>
           <Footer />
-        </article>
+        </article> */}
       </article>
     </section>
   );

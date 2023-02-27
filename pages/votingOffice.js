@@ -124,12 +124,12 @@ function votingOffice() {
         <article>
           <NotificationContainer />
         </article>
-        <article className="flex justify-center mx-36">
+        <article className="flex justify-center mx-36 my-4">
           <VotingOfficeDataGrid dataLoad={dataLoad} />
         </article>
-        <article>
+        {/* <article>
           <Footer />
-        </article>
+        </article> */}
       </article>
     </section>
   );

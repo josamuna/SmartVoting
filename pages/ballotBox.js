@@ -236,14 +236,14 @@ function ballotBox() {
           <div>Candidate Picture</div>
         </article>
       </article>
-      <article className="flex flex-col">
-        <div className="flex justify-center mx-8 mt-4">
+      <article className="flex flex-col ml-2">
+        <div className="flex justify-center mx-8 my-4">
           <BallotBoxDataGrid dataLoad={dataLoad} />
         </div>
       </article>
-      <article>
+      {/* <article>
         <Footer />
-      </article>
+      </article> */}
     </section>
   );
 }

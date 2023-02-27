@@ -103,16 +103,16 @@ function voteResults() {
         </div>
       </article>
       <article className="flex flex-col">
-        <div className="flex justify-center border mx-8 mt-4">
+        <div className="flex justify-center border mx-8 mt-4 my-4">
           <VoteResultsDataGrid dataLoad={dataLoad} />
         </div>
       </article>
       <article>
         <NotificationContainer />
       </article>
-      <article className="mt-8">
+      {/* <article className="mt-8">
         <Footer />
-      </article>
+      </article> */}
     </section>
   );
 }

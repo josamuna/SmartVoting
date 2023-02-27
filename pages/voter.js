@@ -168,12 +168,12 @@ function voter() {
           <article>
             <NotificationContainer />
           </article>
-          <article className="flex justify-center mx-64">
+          <article className="flex justify-center mx-64 my-4">
             <VoterDataGrid dataLoad={dataLoad} />
           </article>
-          <article>
+          {/* <article>
             <Footer />
-          </article>
+          </article> */}
         </article>
       </section>
     );
@@ -216,12 +216,12 @@ function voter() {
         <article>
           <NotificationContainer />
         </article>
-        <article className="flex justify-center mx-64">
+        <article className="flex justify-center mx-64 my-4">
           <VoterDataGrid dataLoad={dataLoad} />
         </article>
-        <article>
+        {/* <article>
           <Footer />
-        </article>
+        </article> */}
       </article>
     </section>
   );

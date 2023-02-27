@@ -142,12 +142,12 @@ function registerCandidate() {
         <article>
           <NotificationContainer />
         </article>
-        <article className="flex justify-center mx-8">
+        <article className="flex justify-center mx-8 my-4">
           <TableCandidates dataLoad={dataLoad} />
         </article>
-        <article>
+        {/* <article>
           <Footer />
-        </article>
+        </article> */}
       </article>
     </section>
   );

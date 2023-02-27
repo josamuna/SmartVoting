@@ -283,16 +283,16 @@ export default function Home() {
         </article>
       </article>
       <article className="flex flex-col">
-        <div className="flex justify-center mx-8 mt-4">
+        <div className="flex justify-center mx-8 my-4">
           <BallotBoxDataGrid dataLoad={dataLoad} />
         </div>
       </article>
       <article>
         <NotificationContainer />
       </article>
-      <article>
+      {/* <article>
         <Footer />
-      </article>
+      </article> */}
     </section>
   );
 }

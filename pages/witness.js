@@ -133,12 +133,12 @@ function witness() {
         <article>
           <NotificationContainer />
         </article>
-        <article className="flex justify-center mx-24">
+        <article className="flex justify-center mx-24 my-4">
           <WitnessDataGrid dataLoad={dataLoad} />
         </article>
-        <article>
+        {/* <article>
           <Footer />
-        </article>
+        </article> */}
       </article>
     </section>
   );

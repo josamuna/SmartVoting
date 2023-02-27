@@ -274,9 +274,9 @@ function vote() {
           <article className="flex justify-center mx-4">
             <VoteDataGrid dataLoad={dataLoad} />
           </article>
-          <article>
+          {/* <article>
             <Footer />
-          </article>
+          </article> */}
         </article>
       </section>
     );
@@ -359,12 +359,12 @@ function vote() {
         <article>
           <NotificationContainer />
         </article>
-        <article className="flex justify-center mx-4">
+        <article className="flex justify-center mx-4 my-4">
           <VoteDataGrid dataLoad={dataLoad} />
         </article>
-        <article>
+        {/* <article>
           <Footer />
-        </article>
+        </article> */}
       </article>
     </section>
   );
